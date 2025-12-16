@@ -173,7 +173,7 @@ html>
 
 Now lets remove closing tags redondancy, and switch chevron to parenthesis
 
-```c++
+```java
 html(
   body(
     div(
@@ -229,7 +229,7 @@ lets switch `:` for `(` and `,`for `)`
 
 Do we actually need braces ? lets switch them for parenthesis too
 
-```c++
+```java
 (
   id(5)
   name(foo)
@@ -288,7 +288,7 @@ TODO, add escaped parenthesis to `<string>`, and rest of UTF8
 }
 ```
 
-```c++
+```java
 menu(
     id(file)
     value(File)
@@ -325,7 +325,7 @@ menu(
 }
 ```
 
-```c++
+```java
 (
   Actors(
     (
@@ -360,7 +360,7 @@ menu(
 </html>
 ```
 
-```c++
+```java
 html(
   body(
     div(class(test)
@@ -380,7 +380,7 @@ Bob, 25, Los Angeles
 Charlie, 35, Chicago
 ```
 
-```c++
+```java
 ( Name(Alice)   Age(30) City(New York)    )
 ( Name(Bob)     Age(25) City(Los Angeles) )
 ( Name(Charlie) Age(35) City(Chicago)     )
@@ -388,7 +388,7 @@ Charlie, 35, Chicago
 
 or, to allow for better scaling (at the cost of using csv header convention)
 
-```c++
+```java
 ( (Name)    (Age) (City)        )
 ( (Alice)   (30)  (New York)    )
 ( (Bob)     (25)  (Los Angeles) )
@@ -397,7 +397,7 @@ or, to allow for better scaling (at the cost of using csv header convention)
 
 or with even more convention
 
-```c++
+```java
 (Name)    (Age) (City)
 (Alice)   (30)  (New York)
 (Bob)     (25)  (Los Angeles)

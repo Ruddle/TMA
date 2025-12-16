@@ -29,7 +29,7 @@ XML RSS feed example:
 ```
 
 TMA representation:
-```c++
+```java
 rss(
   version(2.0)
   channel(
@@ -85,7 +85,7 @@ components:
 ```
 
 TMA representation:
-```c++
+```java
 openapi(3.0.0)
 info(
   title(Sample API)
@@ -137,7 +137,7 @@ ID	Name	Department	Salary
 ```
 
 TMA representation (multiple conventions):
-```c++
+```java
 // Convention 1: Row-based with header names
 ( ID(1) Name(Alice)   Department(Engineering) Salary(95000) )
 ( ID(2) Name(Bob)     Department(Marketing)   Salary(85000) )
@@ -167,7 +167,7 @@ INSERT INTO orders (id, user_id, amount, status) VALUES
 ```
 
 TMA representation:
-```c++
+```java
 users(
   (id(1) username(alice)   email(alice@example.com)   created_at(2024-01-01 10:00:00))
   (id(2) username(bob)     email(bob@example.com)     created_at(2024-01-02 11:00:00))
@@ -211,7 +211,7 @@ JSON log entries:
 ```
 
 TMA representation:
-```c++
+```java
 (
   (timestamp(2024-01-15T08:30:00Z) level(INFO)  message(User logged in)     user_id(123) ip(192.168.1.1))
   (timestamp(2024-01-15T08:31:00Z) level(ERROR) message(Database connection failed) error_code(DB_CONN_001) retry_count(3))
@@ -258,7 +258,7 @@ GeoJSON example:
 ```
 
 TMA representation:
-```c++
+```java
 type(FeatureCollection)
 features(
   (
@@ -309,7 +309,7 @@ ID,Name,Budget,Location
 ```
 
 TMA representation:
-```c++
+```java
 workbook(
   Employees(
     (ID(1) Name(Alice)   Department(Engineering) Salary(95000))
@@ -342,7 +342,7 @@ ex:Bob ex:age 25 .
 ```
 
 TMA representation:
-```c++
+```java
 triples(
   (subject(ex:Alice) predicate(rdf:type) object(ex:Person))
   (subject(ex:Alice) predicate(ex:name) object(Alice))
@@ -367,7 +367,7 @@ Graph representation:
 ```
 
 TMA representation:
-```c++
+```java
 graph(
   node(1 neighbors(2 3 4))
   node(2 neighbors(1 3))
@@ -423,7 +423,7 @@ Complex JSON data:
 ```
 
 TMA representation:
-```c++
+```java
 company(Tech Corp)
 departments(
   (
@@ -478,7 +478,7 @@ cache:homepage:html = "<html>...</html>"
 ```
 
 TMA representation:
-```c++
+```java
 kvstore(
   (key(user:1:name)    value(Alice))
   (key(user:1:email)   value(alice@example.com))
@@ -506,7 +506,7 @@ timestamp,metric,value
 ```
 
 TMA representation:
-```c++
+```java
 timeseries(
   (timestamp(2024-01-15T00:00:00Z) metric(cpu_usage)    value(45.2))
   (timestamp(2024-01-15T00:01:00Z) metric(cpu_usage)    value(47.8))

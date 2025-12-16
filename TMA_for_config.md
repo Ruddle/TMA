@@ -19,7 +19,7 @@ debug = true
 ```
 
 TMA representation:
-```c++
+```java
 (
   database(
     host(localhost)
@@ -54,7 +54,7 @@ services:
 ```
 
 TMA representation (two possible conventions):
-```c++
+```java
 // Convention 1: Preserve array structure
 (
   version(3.8)
@@ -114,7 +114,7 @@ opt-level = 3
 ```
 
 TMA representation:
-```c++
+```java
 (
   package(
     name(my_project)
@@ -144,7 +144,7 @@ MAX_CONNECTIONS=10
 ```
 
 TMA representation:
-```c++
+```java
 (
   DATABASE_URL(postgres://user:pass@localhost/db)
   API_KEY(sk_test_1234567890)
@@ -170,7 +170,7 @@ XML web.config example:
 ```
 
 TMA representation:
-```c++
+```java
 configuration(
   system.web(
     compilation(debug(true) targetFramework(4.8))
@@ -201,7 +201,7 @@ package.json example:
 ```
 
 TMA representation:
-```c++
+```java
 (
   name(my-app)
   version(1.0.0)
@@ -236,7 +236,7 @@ server {
 ```
 
 TMA representation:
-```c++
+```java
 server(
   listen(80)
   server_name(example.com)
@@ -269,7 +269,7 @@ server(
 ```
 
 TMA representation:
-```c++
+```java
 (
   user(
     name(John Doe)
@@ -298,7 +298,7 @@ items_per_page=25
 ```
 
 TMA representation:
-```c++
+```java
 (
   theme(dark)
   language(en_US)
@@ -328,7 +328,7 @@ app:
 ```
 
 TMA representation:
-```c++
+```java
 app(
   name(My Application)
   version(2.1.0)

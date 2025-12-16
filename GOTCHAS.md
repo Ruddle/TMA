@@ -41,7 +41,7 @@ undefined : do not reference the key (like in json exemple 2)
 
 null: reference the key, but with no content
 
-```c++
+```java
 (
     id(5)
     null_data(())
@@ -67,12 +67,12 @@ null
 ```
 
 TMA empty string is an actual empty string
-```c++
+```java
 ```
 
 
 TMA null could (by convention) be 
-```c++
+```java
 ()
 ```
 

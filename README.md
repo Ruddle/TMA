@@ -4,17 +4,253 @@ Text markup
 
 ## Goal
 
-Compromise between XML, JSON, and simplicity
+Compromise between XML, JSON, and simplicity.
 
-## choices
+### Why not use JSON for JSON stuff, and XML for XML stuff ?
 
-Text is first class
+They both are effective, but imperfect enough to ponder.
 
-Its like JSON with no boolean, no numbers, no null, no undefined
+I believe they can be unified. Hopefully you will too in 2 minutes.
 
-Tree structure is first class
+> You might have a few gotchas to output whilst reading this document. It is by design. handling all those in this document would make it too long. Please refer to gotchas.md.
 
-Its like XML with no attributes and no closing tag
+Lets sum up pros and cons of each format.
+
+### JSON pros
+
+- Simple
+- Pretty enough
+
+### JSON cons
+
+- Lots of quotes, braces, and colons, do we need that much ?
+- Not fluent as a markup language (lots of quoting for small string, no multiline for long string)
+- No comments
+
+### XML pros
+
+- Fluent as markup language
+
+### XML cons
+
+- Closing tags redondancy
+- Calls for a lot of choices (data vs metadata, attribute vs child node)
+- Ugly for config files, or as data format
+- No types
+
+### What is common
+
+JSON and XML both represent trees.
+
+They both are transported as text.
+
+### Discussion
+
+If only we could have a text fluent JSON variant.
+or
+If only we could have a simpler, less verbose XML.
+
+We can, solving the first problem converges with solving the second problem.
+
+We need to agree on 2 lemmas first.
+
+### Lemma 1 : Metadata is just data
+
+Lets take a simple example
+
+_XML A_
+
+```xml
+<element metadata_0="foo">
+  <data_1>bar</data_1>
+</element>
+```
+
+vs
+
+_XML B_
+
+```xml
+<element>
+  <metadata_0>foo</metadata_0>
+  <data_1>bar</data_2>
+</element>
+```
+
+A receiver of XML A needs to have a representation of possible metadata beforehand.
+For instance your browser knows to take attribute `class` to apply css classes to elements.
+
+It is a convention.
+
+Promoting this data to metadata (XML B to XML A) does not actually bring any benefit once you accept that there is convention anyway.
+
+An other way to say it is : You cannot replace convention by promoting data to metadata.
+
+You might as well not have attributes(and metadata) in the first place, and focus on convention. This is where JSON shines.
+
+### Lemma 2 : Text is first class anyway
+
+A serious JSON user will validate incoming data.
+
+There is no trust that any value will be cast right after a JSON.parse.
+
+Having types in JSON is thus useless.
+
+_JSON A_
+
+```json
+{
+  "id": 5,
+  "name": "foo",
+  "job": null
+}
+```
+
+_JSON B_
+
+```json
+{
+  "id": "5",
+  "name": "foo",
+  "job": "null"
+}
+```
+
+If a receiver knows that id should be a number, it will validate and cast that piece of data.
+Whether it is a string or a number in the transport format is irrelevant. No professionnal trusts incoming JSON data.
+
+If you remove types from JSON, quotes become half as useful, and text becomes first class.
+This is where XML shines.
+
+### Convergence
+
+If we apply those lemmas to JSON, or to XML, we can end up with the same language.
+
+Lets do it starting from XML:
+Metadata is data = we remove attributes from the language.
+Text is first class = we do not introduce types, and rely on existing conventions.
+
+lets start with an typical sample
+
+```html
+<html>
+  <body>
+    <div class="test">
+      My First Heading
+      <p>My first paragraph.</p>
+    </div>
+  </body>
+</html>
+```
+
+we demote metadata :
+
+```html
+<html>
+  <body>
+    <div>
+      <class>test</class>
+      My First Heading
+      <p>My first paragraph.</p>
+    </div>
+  </body>
+</html>
+```
+
+now, we have the possibility of simplifying the grammar for tags. No need to both open and close those chevrons
+
+```html
+html< 
+  body< 
+    div< 
+      class<test class>
+      My First Heading 
+      p<My first paragraph. p> 
+    div> 
+  body> 
+html>
+```
+
+Now lets remove closing tags redondancy, and switch chevron to parenthesis
+
+```c++
+html(
+  body(
+    div(
+      class(test)
+      My First Heading
+      p(My first paragraph)
+    )
+  )
+)
+```
+
+This is the final form.
+
+Lets now start from JSON
+
+```json
+{
+  "id": 5,
+  "name": "foo",
+  "job": null
+}
+```
+
+Text is first class, we rely on existing convention for types, so we only keep strings.
+
+```json
+{
+  "id": "5",
+  "name": "foo",
+  "job": "null"
+}
+```
+
+Quotes look redondant now, lets remove them, and take care of now meaningful whitespaces.
+
+```json
+{
+  id:5,
+  name:foo,
+  job:null, // trailing comma to disembiguate whitespaces
+}
+```
+
+lets switch `:` for `(` and `,`for `)`
+
+```json
+{
+  id(5)
+  name(foo)
+  job(null)
+}
+```
+
+Do we actually need braces ? lets switch them for parenthesis too
+
+```c++
+(
+  id(5)
+  name(foo)
+  job(null)
+)
+```
+
+We end up with the same grammar.
+
+> price to pay :
+> we lost distinction between dictionnaries and arrays
+
+## What is TMA
+
+It is a format.
+
+- It accepts that conventions exist
+
+- Text is first class
+
+- Only relies on `(` and `)` to shape data
 
 ## Grammar
 
@@ -30,7 +266,7 @@ Its like XML with no attributes and no closing tag
 <string> ::=  ( [a-z] | [A-Z] | [0-9] | "_" | "-" | " " | "\n")+
 ```
 
-TODO, add escaped parenthesis to `<string>`
+TODO, add escaped parenthesis to `<string>`, and rest of UTF8
 
 ## Samples
 
@@ -52,14 +288,14 @@ TODO, add escaped parenthesis to `<string>`
 }
 ```
 
-```
+```c++
 menu(
     id(file)
     value(File)
     popup(
         menuitem(
-          (value(New) onclick(CreateNewDoc))
-          (value(Open) onclick(OpenDoc))
+          (value(New)   onclick(CreateNewDoc))
+          (value(Open)  onclick(OpenDoc))
           (value(Close) onclick(CloseDoc))
         )
     )
@@ -89,25 +325,24 @@ menu(
 }
 ```
 
-
-```
+```c++
 (
-Actors(
+  Actors(
     (
-    name(Tom Cruise)
-    age(56)
-    BornAt(Syracuse, NY)
-    Birthdate(July 3, 1962)
-    photo(https://jsonformatter.org/img/tom-cruise.jpg)
+      name(Tom Cruise)
+      age(56)
+      BornAt(Syracuse, NY)
+      Birthdate(July 3, 1962)
+      photo(https://jsonformatter.org/img/tom-cruise.jpg)
     )
     (
-    name(Robert Downey Jr.)
-    age(53)
-    BornAt(New York City, NY)
-    Birthdate(April 4, 1965)
-    photo(https://jsonformatter.org/img/Robert-Downey-Jr.jpg)
+      name(Robert Downey Jr.)
+      age(53)
+      BornAt(New York City, NY)
+      Birthdate(April 4, 1965)
+      photo(https://jsonformatter.org/img/Robert-Downey-Jr.jpg)
     )
-)
+  )
 )
 
 ```
@@ -125,8 +360,7 @@ Actors(
 </html>
 ```
 
-
-```
+```c++
 html(
   body(
     div(class(test)
@@ -146,24 +380,26 @@ Bob, 25, Los Angeles
 Charlie, 35, Chicago
 ```
 
-
-
-```
-(
-(Name(Alice)Age(30)City(New York))
-(Name(Bob)Age(25)City(Los Angeles))
-(Name(Charlie)Age(35)City(Chicago))
-)
+```c++
+( Name(Alice)   Age(30) City(New York)    )
+( Name(Bob)     Age(25) City(Los Angeles) )
+( Name(Charlie) Age(35) City(Chicago)     )
 ```
 
-or, to allow for better scaling (at the cost of some convention)
+or, to allow for better scaling (at the cost of using csv header convention)
 
-
+```c++
+( (Name)    (Age) (City)        )
+( (Alice)   (30)  (New York)    )
+( (Bob)     (25)  (Los Angeles) )
+( (Charlie) (35)  (Chicago)     )
 ```
-(
-headers((Name)(Age)(City))
-((Alice)(30)(New York))
-((Bob)(25)(Los Angeles))
-((Charlie)(35)(Chicago))
-)
+
+or with even more convention
+
+```c++
+(Name)    (Age) (City)
+(Alice)   (30)  (New York)
+(Bob)     (25)  (Los Angeles)
+(Charlie) (35)  (Chicago)
 ```

@@ -33,7 +33,7 @@ Lets sum up pros and cons of each format.
 
 ### XML cons
 
-- Closing tags redondancy
+- Closing tags redundancy
 - Calls for a lot of choices (data vs metadata, attribute vs child node)
 - Ugly for config files, or as data format
 - No types
@@ -42,7 +42,7 @@ Lets sum up pros and cons of each format.
 
 JSON and XML both represent trees.
 
-They both are transported as text.
+They are transported as text.
 
 ### Discussion
 
@@ -171,7 +171,7 @@ html<
 html>
 ```
 
-Now lets remove closing tags redondancy, and switch chevron to parenthesis
+Now lets remove closing tags redundancy, and switch chevron to parenthesis
 
 ```java
 html(
@@ -185,7 +185,7 @@ html(
 )
 ```
 
-This is the final form.
+This is the final form: TMA.
 
 Lets now start from JSON
 
@@ -197,7 +197,7 @@ Lets now start from JSON
 }
 ```
 
-Text is first class, we rely on existing convention for types, so we only keep strings.
+Text is first class, we rely on existing conventions for types, so we only keep strings.
 
 ```json
 {
@@ -207,7 +207,7 @@ Text is first class, we rely on existing convention for types, so we only keep s
 }
 ```
 
-Quotes look redondant now, lets remove them, and take care of now meaningful whitespaces.
+Quotes look redundant now, lets remove them, and take care of now meaningful whitespaces.
 
 ```json
 {
@@ -239,6 +239,8 @@ Do we actually need braces ? lets switch them for parenthesis too
 
 We end up with the same grammar.
 
+This is a PoC progression, I do not suggest to lose distinction between null and "null". See `GOTCHAS.md`
+
 > price to pay :
 > we lost distinction between dictionnaries and arrays
 
@@ -252,7 +254,11 @@ It is a format.
 
 - Only relies on `(` and `)` to shape data
 
+_TODO: introduce syntax for comments_
+
 ## Grammar
+
+pseudocode: 
 
 ```bnf
 <document> ::= <node>
@@ -266,7 +272,9 @@ It is a format.
 <string> ::=  ( [a-z] | [A-Z] | [0-9] | "_" | "-" | " " | "\n")+
 ```
 
-TODO, add escaped parenthesis to `<string>`, and rest of UTF8
+TODO: 
+- add escaped parenthesis to `<string>`, 
+- add rest of UTF8
 
 ## Samples
 
@@ -287,7 +295,7 @@ TODO, add escaped parenthesis to `<string>`, and rest of UTF8
   }
 }
 ```
-
+=>
 ```java
 menu(
     id(file)
@@ -324,7 +332,7 @@ menu(
   ]
 }
 ```
-
+=>
 ```java
 (
   Actors(
@@ -359,7 +367,7 @@ menu(
   </body>
 </html>
 ```
-
+=>
 ```java
 html(
   body(
@@ -379,6 +387,7 @@ Alice, 30, New York
 Bob, 25, Los Angeles
 Charlie, 35, Chicago
 ```
+=>
 
 ```java
 ( Name(Alice)   Age(30) City(New York)    )

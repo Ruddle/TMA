@@ -81,7 +81,11 @@ TMA null could (by convention) be
 
 Yes, this is lost without some new convention.
 
-## 4: Your arguments are not pendantically true
+## 4: Lost from JSON: Distinction between Array and Ojbect
+
+_TODO_
+
+## 5: Your arguments are not pendantically true
 
 My opinion is that technicalites can be addressed once we agree on the functionnal aspect first.
 

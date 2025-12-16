@@ -143,9 +143,9 @@ _JSON B_
 ```
 
 If a receiver knows that id should be a number, it will validate and cast that piece of data.
-Whether it is a string or a number in the transport format is irrelevant. No professionnal trusts incoming JSON data.
+Whether it is a string or a number in the transport format is irrelevant.
 
-Thus having primitive types in JSON is thus useless (as a format, outside of being a very useful subset of JavaScript).
+Thus having primitive types in JSON is useless (as a format, outside of being a very useful subset of JavaScript).
 
 If you remove types from JSON, quotes become half as useful, and text becomes first class.
 This is where XML shines.
@@ -241,7 +241,7 @@ Text is first class, we rely on existing conventions for types, so we only keep 
 
 Quotes look redundant now, lets remove them, and take care of now meaningful whitespaces.
 
-```json
+```js
 {
   id:5,
   name:foo,
@@ -251,7 +251,7 @@ Quotes look redundant now, lets remove them, and take care of now meaningful whi
 
 lets switch `:` for `(` and `,`for `)`
 
-```json
+```java
 {
   id(5)
   name(foo)
@@ -271,10 +271,7 @@ Do we actually need braces ? lets switch them for parenthesis too
 
 We end up with the same grammar.
 
-This is a PoC progression, I do not suggest to lose distinction between null and "null". See `GOTCHAS.md`
-
-> price to pay :
-> we lost distinction between dictionnaries and arrays
+This is a PoC progression, I do not suggest to lose distinction between null and "null". See `GOTCHAS.md`.
 
 ## What is TMA
 

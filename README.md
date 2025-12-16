@@ -2,7 +2,7 @@
 
 Text markup
 
-```java
+```scala
 (
   What(Text markup language)
   How(Compromise between XML, JSON, and simplicity)
@@ -10,13 +10,35 @@ Text markup
 )
 ```
 
+## Table of Contents
+
+- [Why not use JSON for JSON stuff, and XML for XML stuff ?](#why-not-use-json-for-json-stuff-and-xml-for-xml-stuff)
+  - [JSON pros](#json-pros)
+  - [JSON cons](#json-cons)
+  - [XML pros](#xml-pros)
+  - [XML cons](#xml-cons)
+  - [What is common](#what-is-common)
+  - [Discussion](#discussion)
+  - [Lemma 1 : Metadata is just data](#lemma-1--metadata-is-just-data)
+  - [Lemma 2 : Text is first class anyway](#lemma-2--text-is-first-class-anyway)
+  - [Convergence](#convergence)
+    - [Starting from XML](#starting-from-xml)
+    - [Starting from JSON](#starting-from-json)
+- [What is TMA](#what-is-tma)
+- [Grammar](#grammar)
+- [Samples](#samples)
+  - [json 1](#json-1)
+  - [json 2](#json-2)
+  - [html](#html)
+  - [csv](#csv)
+
 ### Why not use JSON for JSON stuff, and XML for XML stuff ?
 
 They both are effective, but imperfect enough to ponder.
 
 I believe they can be unified. Hopefully you will too in 2 minutes.
 
-> You might have a few gotchas to output whilst reading this document. It is by design. handling all those in this document would make it too long. Please refer to gotchas.md.
+> You might have gotchas to output whilst reading this document. It is by design. Addressing everyting in this document would make it too long. Please refer to GOTCHAS.md.
 
 Lets sum up pros and cons of each format.
 
@@ -50,17 +72,19 @@ They are transported as text.
 
 ### Discussion
 
-If only we could have a text fluent JSON variant.
-or
-If only we could have a simpler, less verbose XML.
+_We want a text fluent JSON variant._
 
-We can, solving the first problem converges with solving the second problem.
+and
 
-We need to agree on 2 lemmas first.
+_We want a simpler, less verbose XML._
+
+It is possible, and the solution is the same for both goals.
+
+Lets agree on 2 lemmas first.
 
 ### Lemma 1 : Metadata is just data
 
-Lets take a simple example
+Given this example:
 
 _XML A_
 
@@ -86,9 +110,9 @@ For instance your browser knows to take attribute `class` to apply css classes t
 
 It is a convention.
 
-Promoting this data to metadata (XML B to XML A) does not actually bring any benefit once you accept that there is convention anyway.
+Promoting this data to metadata (XML B to XML A) does not actually bring any benefit once you accept that there is a convention anyway.
 
-An other way to say it is : You cannot replace convention by promoting data to metadata.
+An other way to say it: You cannot replace convention by promoting data to metadata.
 
 You might as well not have attributes(and metadata) in the first place, and focus on convention. This is where JSON shines.
 
@@ -97,8 +121,6 @@ You might as well not have attributes(and metadata) in the first place, and focu
 A serious JSON user will validate incoming data.
 
 There is no trust that any value will be cast right after a JSON.parse.
-
-Having types in JSON is thus useless.
 
 _JSON A_
 
@@ -123,6 +145,8 @@ _JSON B_
 If a receiver knows that id should be a number, it will validate and cast that piece of data.
 Whether it is a string or a number in the transport format is irrelevant. No professionnal trusts incoming JSON data.
 
+Having primitive types in JSON is thus useless.
+
 If you remove types from JSON, quotes become half as useful, and text becomes first class.
 This is where XML shines.
 
@@ -130,11 +154,15 @@ This is where XML shines.
 
 If we apply those lemmas to JSON, or to XML, we can end up with the same language.
 
-Lets do it starting from XML:
-Metadata is data = we remove attributes from the language.
-Text is first class = we do not introduce types, and rely on existing conventions.
+Here we go.
 
-lets start with an typical sample
+#### Starting from XML
+
+Metadata is data => we remove attributes from the language.
+
+Text is first class => we do not introduce types, and rely on existing conventions.
+
+Lets start with an typical sample
 
 ```html
 <html>
@@ -147,7 +175,7 @@ lets start with an typical sample
 </html>
 ```
 
-we demote metadata :
+We demote metadata :
 
 ```html
 <html>
@@ -161,7 +189,7 @@ we demote metadata :
 </html>
 ```
 
-now, we have the possibility of simplifying the grammar for tags. No need to both open and close those chevrons
+Now we have the possibility of simplifying the grammar for tags. No need to both open and close those chevrons
 
 ```html
 html< 
@@ -175,7 +203,7 @@ html<
 html>
 ```
 
-Now lets remove closing tags redundancy, and switch chevron to parenthesis
+Now lets remove closing tags redundancy, and switch chevrons to parentheses
 
 ```java
 html(
@@ -191,7 +219,7 @@ html(
 
 This is the final form: TMA.
 
-Lets now start from JSON
+#### Starting from JSON
 
 ```json
 {
@@ -250,7 +278,7 @@ This is a PoC progression, I do not suggest to lose distinction between null and
 
 ## What is TMA
 
-It is a format.
+It is a format:
 
 - It accepts that conventions exist
 
@@ -399,20 +427,11 @@ Charlie, 35, Chicago
 ( Name(Charlie) Age(35) City(Chicago)     )
 ```
 
-or, to allow for better scaling (at the cost of using csv header convention)
+or, to allow for better scaling (at the cost of using csv header convention):
 
 ```java
 ( (Name)    (Age) (City)        )
 ( (Alice)   (30)  (New York)    )
 ( (Bob)     (25)  (Los Angeles) )
 ( (Charlie) (35)  (Chicago)     )
-```
-
-or with even more convention
-
-```java
-(Name)    (Age) (City)
-(Alice)   (30)  (New York)
-(Bob)     (25)  (Los Angeles)
-(Charlie) (35)  (Chicago)
 ```

@@ -2,9 +2,13 @@
 
 Text markup
 
-## Goal
-
-Compromise between XML, JSON, and simplicity.
+```java
+(
+  What(Text markup language)
+  How(Compromise between XML, JSON, and simplicity)
+  Why(Reject Status Quo)
+)
+```
 
 ### Why not use JSON for JSON stuff, and XML for XML stuff ?
 

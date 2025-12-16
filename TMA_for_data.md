@@ -265,7 +265,7 @@ features(
     type(Feature)
     geometry(
       type(Point)
-      coordinates((102.0 0.5))
+      coordinates((102.0)(0.5))
     )
     properties(
       name(Location A)
@@ -277,10 +277,10 @@ features(
     geometry(
       type(LineString)
       coordinates(
-        (102.0 0.0)
-        (103.0 1.0)
-        (104.0 0.0)
-        (105.0 1.0)
+        ((102.0)(0.0))
+        ((103.0)(1.0))
+        ((104.0)(0.0))
+        ((105.0)(1.0))
       )
     )
     properties(
@@ -324,61 +324,7 @@ workbook(
 )
 ```
 
-## 8. RDF/Triple Data
-
-RDF triples (Turtle format):
-```turtle
-@prefix ex: <http://example.org/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-
-ex:Alice rdf:type ex:Person .
-ex:Alice ex:name "Alice" .
-ex:Alice ex:age 30 .
-ex:Alice ex:knows ex:Bob .
-
-ex:Bob rdf:type ex:Person .
-ex:Bob ex:name "Bob" .
-ex:Bob ex:age 25 .
-```
-
-TMA representation:
-```java
-triples(
-  (subject(ex:Alice) predicate(rdf:type) object(ex:Person))
-  (subject(ex:Alice) predicate(ex:name) object(Alice))
-  (subject(ex:Alice) predicate(ex:age) object(30))
-  (subject(ex:Alice) predicate(ex:knows) object(ex:Bob))
-  (subject(ex:Bob) predicate(rdf:type) object(ex:Person))
-  (subject(ex:Bob) predicate(ex:name) object(Bob))
-  (subject(ex:Bob) predicate(ex:age) object(25))
-)
-```
-
-## 9. Graph Data (Adjacency List)
-
-Graph representation:
-```
-1: 2, 3, 4
-2: 1, 3
-3: 1, 2, 4
-4: 1, 3, 5
-5: 4, 6
-6: 5
-```
-
-TMA representation:
-```java
-graph(
-  node(1 neighbors(2 3 4))
-  node(2 neighbors(1 3))
-  node(3 neighbors(1 2 4))
-  node(4 neighbors(1 3 5))
-  node(5 neighbors(4 6))
-  node(6 neighbors(5))
-)
-```
-
-## 10. Nested JSON with Complex Arrays
+## 8. Nested JSON with Complex Arrays
 
 Complex JSON data:
 ```json
@@ -462,7 +408,7 @@ departments(
 )
 ```
 
-## 11. Key-Value Store Dump
+## 9. Key-Value Store Dump
 
 Redis-like key-value data:
 ```
@@ -492,7 +438,7 @@ kvstore(
 )
 ```
 
-## 12. Time Series Data
+## 10. Time Series Data
 
 Time series measurements:
 ```

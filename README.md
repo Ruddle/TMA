@@ -118,7 +118,7 @@ You might as well not have attributes(and metadata) in the first place, and focu
 
 ### Lemma 2 : Text is first class anyway
 
-A serious JSON user will validate incoming data.
+A serious JSON user will validate and cast incoming data.
 
 There is no trust that any value will be cast right after a JSON.parse.
 
@@ -145,7 +145,7 @@ _JSON B_
 If a receiver knows that id should be a number, it will validate and cast that piece of data.
 Whether it is a string or a number in the transport format is irrelevant. No professionnal trusts incoming JSON data.
 
-Having primitive types in JSON is thus useless.
+Thus having primitive types in JSON is thus useless (as a format, outside of being a very useful subset of JavaScript).
 
 If you remove types from JSON, quotes become half as useful, and text becomes first class.
 This is where XML shines.

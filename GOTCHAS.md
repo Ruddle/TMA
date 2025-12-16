@@ -85,7 +85,44 @@ Yes, this is lost without some new convention.
 
 _TODO_
 
-## 5: Your arguments are not pendantically true
+
+## 5: I actually need to know if a value is a string or a number
+
+*Implicitly tagged unions* that use primitive type as tag, are not supported in TMA
+
+Technically, this is possible in JSON: 
+
+```json
+[
+  {"level": 10},
+  {"level": "master"},
+  {"level": "beginner"},
+  {"level": 0},
+  {"level": 32},
+  {"level": "0xBEEF"}
+]
+``` 
+
+And an actual user of this data might switch on the level value type (the tag of the union), and have different behavior for numbers or strings. We cannot recover from losing primitive type here (0xBEEF would be unexpectedly cast to number).
+
+Using *implicitly tagged unions* is **madness**. Hopefully unseen in professionnal code.
+
+At least use explicitly tagged union.
+
+```json
+{
+  {"type":"level_exact", "level": 10},
+  {"type":"level_rank", "level": "master"},
+  {"type":"level_rank", "level": "beginner"},
+  {"type":"level_exact", "level": 0},
+  {"type":"level_exact", "level": 32},
+  {"type":"level_rank", "level": "expert"}
+}
+```
+
+This one translate well to TMA.
+
+## 6: Your arguments are not pendantically true
 
 My opinion is that technicalites can be addressed once we agree on the functionnal aspect first.
 

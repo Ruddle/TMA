@@ -101,7 +101,7 @@ _XML B_
 ```xml
 <element>
   <metadata_0>foo</metadata_0>
-  <data_1>bar</data_2>
+  <data_1>bar</data_1>
 </element>
 ```
 
@@ -143,9 +143,11 @@ _JSON B_
 ```
 
 If a receiver knows that id should be a number, it will validate and cast that piece of data.
-Whether it is a string or a number in the transport format is irrelevant.
+If a receiver does not know a value type beforehand, it probably is just a medium to another, more informed, terminal receiver. 
 
-Thus having primitive types in JSON is useless (as a format, outside of being a very useful subset of JavaScript).
+Whether a terminal value is a string or a number in the transport format is irrelevant either way.
+
+Having primitive types in JSON is thus useless (as a format, **outside** of being a very useful subset of JavaScript).
 
 If you remove types from JSON, quotes become half as useful, and text becomes first class.
 This is where XML shines.
